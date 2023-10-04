@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/stream_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+<!--    <io.atomic.android_compose_boilerplate.components.ComposeFrameLayout-->
+<!--        android:id="@+id/compose_frame"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+
+
+</LinearLayout>
