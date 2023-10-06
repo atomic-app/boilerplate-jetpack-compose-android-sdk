@@ -102,18 +102,14 @@ class MainActivity : AppCompatActivity() {
     private fun cardDidRequestRunTimeVariablesHandler(cards: List<AACCardInstance>, done: (cardsWithResolvedVariables: List<AACCardInstance>) -> Unit) {
 
         for (card in cards) {
-            val longDf: DateFormat = DateFormat.getDateInstance(DateFormat.LONG)
             val shortDf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT)
             val today = Calendar.getInstance().time
-            val formattedLongDate = longDf.format(today)
             val formattedShortDate = shortDf.format(today)
+            val customerName = "Rommel Suarez"
 
-            card.resolveVariableWithNameAndValue("dateShort", formattedShortDate)
-            card.resolveVariableWithNameAndValue("dateLong", formattedLongDate)
-
-            val userName = "A variable changed at runtime"
-            card.resolveVariableWithNameAndValue("name", userName)
-
+            // Resolve the below runtime variables
+            card.resolveVariableWithNameAndValue("customer_name", customerName)
+            card.resolveVariableWithNameAndValue("birthdate", formattedShortDate)
         }
 
         done(cards)
