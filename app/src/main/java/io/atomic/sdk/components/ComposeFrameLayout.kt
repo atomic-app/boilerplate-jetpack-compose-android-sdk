@@ -1,4 +1,4 @@
-package io.atomic.android_compose_boilerplate.components
+package io.atomic.sdk.components
 
 import android.content.Context
 import android.util.AttributeSet

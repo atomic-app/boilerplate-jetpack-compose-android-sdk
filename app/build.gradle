@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -8,7 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "io.atomic.android_compose_boilerplate"
+        applicationId "boilerplate.jetpack.compose.android.sdk"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -54,8 +55,8 @@ dependencies {
 
     // Firebase support for Notifications
     // import the Firebase BOM
-    implementation platform('com.google.firebase:firebase-bom:30.3.1')
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.6'
+    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -67,6 +68,7 @@ dependencies {
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.2.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

@@ -1,4 +1,4 @@
-package io.atomic.android_compose_boilerplate.ui.theme
+package io.atomic.sdk.ui.theme
 
 import android.app.Activity
 import android.os.Build

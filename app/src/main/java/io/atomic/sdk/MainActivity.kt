@@ -1,4 +1,4 @@
-package io.atomic.android_compose_boilerplate
+package io.atomic.sdk
 
 import android.os.Bundle
 import android.widget.Toast
@@ -11,7 +11,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.ViewModelProvider
 import com.atomic.actioncards.feed.data.model.AACCardInstance
-import io.atomic.android_compose_boilerplate.components.CardDetails
+import io.atomic.android_compose_boilerplate.R
+import io.atomic.sdk.components.CardDetails
 import java.text.DateFormat
 import java.util.Calendar
 

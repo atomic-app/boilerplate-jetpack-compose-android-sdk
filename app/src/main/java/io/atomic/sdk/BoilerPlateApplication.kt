@@ -1,4 +1,4 @@
-package io.atomic.android_compose_boilerplate
+package io.atomic.sdk
 
 import android.app.Application
 import com.atomic.actioncards.sdk.AACSDK

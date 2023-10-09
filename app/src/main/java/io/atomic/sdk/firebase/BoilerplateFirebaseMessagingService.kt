@@ -1,4 +1,4 @@
-package io.atomic.android_compose_boilerplate.firebase
+package io.atomic.sdk.firebase
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -12,8 +12,10 @@ import androidx.core.app.NotificationCompat
 import com.atomic.actioncards.sdk.AACSDK
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import io.atomic.android_compose_boilerplate.MainActivity
+
 import io.atomic.android_compose_boilerplate.R
+import io.atomic.sdk.MainActivity
+
 
 class BoilerplateFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -90,7 +92,7 @@ class BoilerplateFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
         const val TAG = "NotificationService"
         private const val REQUEST_CODE = 1
-        private const val CHANNEL_ID = "atomic"
+        private const val CHANNEL_ID = "atomic-notifications"
         private const val CHANNEL_NAME = "Atomic"
         private const val TITLE_KEY = "title"
         private const val MESSAGE_KEY = "body"
