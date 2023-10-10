@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("io.atomic.android_compose_boilerplate", appContext.packageName)
+        assertEquals("io.atomic.sdk", appContext.packageName)
     }
 }
