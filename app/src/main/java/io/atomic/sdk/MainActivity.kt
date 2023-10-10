@@ -11,7 +11,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.ViewModelProvider
 import com.atomic.actioncards.feed.data.model.AACCardInstance
-import io.atomic.android_compose_boilerplate.R
 import io.atomic.sdk.components.CardDetails
 import java.text.DateFormat
 import java.util.Calendar

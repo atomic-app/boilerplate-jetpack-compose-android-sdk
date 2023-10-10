@@ -13,8 +13,8 @@ import com.atomic.actioncards.sdk.AACSDK
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-import io.atomic.android_compose_boilerplate.R
 import io.atomic.sdk.MainActivity
+import io.atomic.sdk.R
 
 
 class BoilerplateFirebaseMessagingService : FirebaseMessagingService() {
