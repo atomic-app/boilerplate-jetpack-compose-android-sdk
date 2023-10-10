@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "545525176263",
+    "project_id": "boilerplate-jetpack-compose",
+    "storage_bucket": "boilerplate-jetpack-compose.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545525176263:android:d9b23a2e23e908e9312be2",
+        "android_client_info": {
+          "package_name": "boilerplate.jetpack.compose.android.sdk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeVKJIi3QwFUmPks1n_JQ--AlzUTidB7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
