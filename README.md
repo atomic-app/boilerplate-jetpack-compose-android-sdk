@@ -35,7 +35,7 @@ Instructions are as follows
 Before generating JWT, you will need to get the user id of your test account.
 You can find the the user IDs from [Atomic Workbench Test Accounts secton](https://workbench.atomic.io) 
 by navigating to the Configuration area. Under 'Test Accounts', look for the test account you need and click the 'Copy ID' link.
-Paste the user Id on the sub field. Please follow the instruction [here](https://documentation.atomic.io/sdks/auth-SDK) on how to 
+Paste the user Id on the sub field. Please follow the complete instruction [here](https://documentation.atomic.io/sdks/auth-SDK) on how to 
 generate JWT.
 
 ```
