@@ -5,6 +5,71 @@ Since the SDK uses a fragment to display the stream container, we cannot directl
 ways we can mix both worlds where you can have a modern jetpack compose, but still able to launch the stream container
 along side it. In this sample, we used ComposeView to achieve that.
 
+
+```
+class ComposeFrameLayout @JvmOverloads constructor(
+context: Context, attrs: AttributeSet? = null,
+defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
+
+    init {
+        addView(
+            ComposeView(context).apply {
+
+                setViewCompositionStrategy(
+                    ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+                )
+                setContent {
+                    val toast = Toast.makeText(
+                        LocalContext.current,
+                        "You have just interacted with a composable",
+                        Toast.LENGTH_LONG
+                    )
+
+                    Column {
+                        Row() {
+                            MaterialTheme {
+                                CardDetails(
+                                    title = "Composable inside a FrameLayout",
+                                    description = "This is a sample code where you " +
+                                            "can create a composable which act as a normal view." +
+                                            "You can add this to your XML layout like a regular FrameLayout",
+                                    onClick = { toast.show() },
+                                    buttonLabel = "Click me"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        )
+    }
+}
+```
+
+XML layout which refers to ComposeView
+```
+    <io.atomic.sdk.components.ComposeFrameLayout
+        android:id ="@+id/compose_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stream_container"
+        android:paddingTop="5dp"/>
+
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/compose_frameLayout"
+        android:paddingTop="5dp"
+        />
+```
+
 The code is based around the documentation and designed to get you up and running as quickly as possible, not necessarily as best practice.
 
 The app won't run out of the box, you will need to add your own values to BoilerPlateViewModel in the companion object.
@@ -37,9 +102,9 @@ Instructions are as follows
 
 ## Generating JWT
 Before generating JWT, you will need to get the user id of your test account.
-You can find the the user IDs from [Atomic Workbench Test Accounts secton](https://workbench.atomic.io) 
+You can find the the user IDs from [Atomic Workbench Test Accounts secton](https://workbench.atomic.io)
 by navigating to the Configuration area. Under 'Test Accounts', look for the test account you need and click the 'Copy ID' link.
-Paste the user Id on the sub field. Please follow the complete instruction [here](https://documentation.atomic.io/sdks/auth-SDK) on how to 
+Paste the user Id on the sub field. Please follow the complete instruction [here](https://documentation.atomic.io/sdks/auth-SDK) on how to
 generate JWT.
 
 ```
