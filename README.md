@@ -49,6 +49,14 @@ defStyleAttr: Int = 0
 
 XML layout which refers to ComposeView
 ```
+    <FrameLayout
+            android:id="@+id/stream_container"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+
     <io.atomic.sdk.components.ComposeFrameLayout
         android:id ="@+id/compose_frameLayout"
         android:layout_width="match_parent"
@@ -70,9 +78,42 @@ XML layout which refers to ComposeView
         />
 ```
 
+The stream container can still use the xml framelayout to load its fragment,and also at the same time
+write compose components.
+```
+override fun onCreate(savedInstanceState: Bundle?) {
+super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.main_layout)
+
+        // Reference the viewModel
+        viewModel = ViewModelProvider(this)[BoilerPlateViewModel::class.java]
+
+        // Start the stream container
+        viewModel.streamContainer?.start(R.id.stream_container, supportFragmentManager)
+
+
+        //Reference the composeView element from xml layout
+        val composeView = findViewById<ComposeView>(R.id.compose_view)
+        //This is where you set your jetpack compose compose contents
+        composeView.apply {
+            //Dispose of the Composition when the view's LifecycleOwner is destroyed
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+
+            setContent {
+            
+            }
+        }
+ }
+
+```
+
 The code is based around the documentation and designed to get you up and running as quickly as possible, not necessarily as best practice.
 
 The app won't run out of the box, you will need to add your own values to BoilerPlateViewModel in the companion object.
+
 
 ```
 companion object {
