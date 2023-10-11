@@ -104,7 +104,7 @@ super.onCreate(savedInstanceState)
             )
 
             setContent {
-            
+                // Do all your compose stuffs here
             }
         }
  }
@@ -152,7 +152,7 @@ generate JWT.
 ```
 const fs = require("fs-extra");
 const jwt = require("jsonwebtoken");
-const PRIVATE_KEY_PATH = path.join(__dirname,"<this the path to your jwt private key")
+const PRIVATE_KEY_PATH = path.join(__dirname,"<this is the path to your jwt private key")
 
 const privateKey = await fs.readFile(PRIVATE_KEY_PATH, "utf8");
 const id = "unique identifier for your user copied from workbench test account";
