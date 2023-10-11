@@ -34,8 +34,10 @@ class ComposeFrameLayout @JvmOverloads constructor(
                         Row() {
                             MaterialTheme {
                                 CardDetails(
-                                    title = "Composable",
-                                    description = "This is a composable component",
+                                    title = "Composable inside a FrameLayout",
+                                    description = "This is a sample code where you " +
+                                            "can create a composable which act as a normal view." +
+                                            "You can add this to your XML layout like a regular FrameLayout",
                                     onClick = { toast.show() },
                                     buttonLabel = "Click me"
                                 )

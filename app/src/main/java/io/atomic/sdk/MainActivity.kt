@@ -27,9 +27,6 @@ class MainActivity : AppCompatActivity() {
         // Reference the viewModel
         viewModel = ViewModelProvider(this)[BoilerPlateViewModel::class.java]
 
-        // Initialize the container
-        viewModel.initContainer()
-
         // Start the stream container
         viewModel.streamContainer?.start(R.id.stream_container, supportFragmentManager)
 
@@ -56,8 +53,9 @@ class MainActivity : AppCompatActivity() {
                     Row() {
                         MaterialTheme {
                           CardDetails(
-                              title = "Composable",
-                              description = "This is a composable component" ,
+                              title = "Composable using ComposeView",
+                              description = "This component is directly referenced from the XML layout as a ComposeView." +
+                                      "From your Activity, you can refer to this and add your composable codes in the setContent." ,
                               onClick = { toast.show() },
                               buttonLabel = "Click me"
                           )

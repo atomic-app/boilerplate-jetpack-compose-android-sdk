@@ -13,6 +13,10 @@ class BoilerPlateViewModel : ViewModel() {
 
     var streamContainer: AACStreamContainer? = null
 
+    init {
+        initContainer()
+    }
+
     fun initContainer() {
         if (streamContainer != null) {
             return

@@ -19,15 +19,15 @@ fun CardDetails (title: String,
     Card {
 
         Column {
-            Row (modifier = Modifier.padding(20.dp)){
+            Row (modifier = Modifier.padding(5.dp)){
                 Text(title)
             }
 
-            Row (modifier = Modifier.padding(20.dp)){
+            Row (modifier = Modifier.padding(10.dp)){
                 Text(description)
             }
 
-            Row (modifier = Modifier.padding(20.dp)){
+            Row (modifier = Modifier.padding(10.dp)){
                 Button(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
                     Text(buttonLabel)
                 }
