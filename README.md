@@ -5,6 +5,7 @@ Since the SDK uses a fragment to display the stream container, we cannot directl
 ways we can mix both worlds where you can have a modern jetpack compose, but still able to launch the stream container
 along side it. In this sample, we used ComposeView to achieve that.
 
+![test](Screenshot.png)
 
 ```
 class ComposeFrameLayout @JvmOverloads constructor(
