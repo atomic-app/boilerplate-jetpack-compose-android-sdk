@@ -70,5 +70,5 @@ at `applyHandlers`
 An example of how to receive and create in app notifications can be found in `BoilerplateFirebaseMessaging`
 You will have to supply your own google-services.json file from your own app on the Firebase console.
 Information for the whole process can be found [here](https://documentation.atomic.io/sdks/android#notifications)
-including the Firebase setup documentation. Also make sure that you emulator or device has permission to accept push notifications
+including the Firebase setup documentation. Also make sure that your emulator or device has permission to accept push notifications
 from the boiler plate app.
