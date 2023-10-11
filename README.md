@@ -5,6 +5,7 @@ Since the SDK uses a fragment to display the stream container, we cannot directl
 ways we can mix both worlds where you can have a modern jetpack compose, but still able to launch the stream container
 along side it. In this sample, we used ComposeView to achieve that.
 
+![test](Screenshot.png)
 
 ```
 class ComposeFrameLayout @JvmOverloads constructor(
@@ -49,6 +50,14 @@ defStyleAttr: Int = 0
 
 XML layout which refers to ComposeView
 ```
+    <FrameLayout
+            android:id="@+id/stream_container"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+
     <io.atomic.sdk.components.ComposeFrameLayout
         android:id ="@+id/compose_frameLayout"
         android:layout_width="match_parent"
@@ -70,9 +79,42 @@ XML layout which refers to ComposeView
         />
 ```
 
+The stream container can still use the xml framelayout to load its fragment,and also at the same time
+write compose components.
+```
+override fun onCreate(savedInstanceState: Bundle?) {
+super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.main_layout)
+
+        // Reference the viewModel
+        viewModel = ViewModelProvider(this)[BoilerPlateViewModel::class.java]
+
+        // Start the stream container
+        viewModel.streamContainer?.start(R.id.stream_container, supportFragmentManager)
+
+
+        //Reference the composeView element from xml layout
+        val composeView = findViewById<ComposeView>(R.id.compose_view)
+        //This is where you set your jetpack compose compose contents
+        composeView.apply {
+            //Dispose of the Composition when the view's LifecycleOwner is destroyed
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+
+            setContent {
+                // Do all your compose stuffs here
+            }
+        }
+ }
+
+```
+
 The code is based around the documentation and designed to get you up and running as quickly as possible, not necessarily as best practice.
 
 The app won't run out of the box, you will need to add your own values to BoilerPlateViewModel in the companion object.
+
 
 ```
 companion object {
@@ -110,7 +152,7 @@ generate JWT.
 ```
 const fs = require("fs-extra");
 const jwt = require("jsonwebtoken");
-const PRIVATE_KEY_PATH = path.join(__dirname,"<this the path to your jwt private key")
+const PRIVATE_KEY_PATH = path.join(__dirname,"<this is the path to your jwt private key")
 
 const privateKey = await fs.readFile(PRIVATE_KEY_PATH, "utf8");
 const id = "unique identifier for your user copied from workbench test account";
