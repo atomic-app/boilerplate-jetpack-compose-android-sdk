@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             val shortDf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT)
             val today = Calendar.getInstance().time
             val formattedShortDate = shortDf.format(today)
-            val customerName = "Rommel Suarez"
+            val customerName = "Atomic guy!!!"
 
             // Resolve the below runtime variables
             card.resolveVariableWithNameAndValue("customer_name", customerName)
