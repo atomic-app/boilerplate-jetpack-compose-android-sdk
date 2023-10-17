@@ -136,7 +136,7 @@ companion object {
 
         const val containerId = ""
         const val apiHost = ""
-        const val apiKey = "r"
+        const val apiKey = ""
         const val environmentId = ""
 
         /* This is the hard coded JWT for the purposes of this app. You would normally get via
