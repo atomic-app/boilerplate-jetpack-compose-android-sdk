@@ -1,9 +1,13 @@
 # boilerplate-jetpack-compose-android-sdk
 This is a boiler-plate app that can be forked to get you started with the Atomic SDK for Android and jetpack compose.
 
-Since the SDK uses a fragment to display the stream container, we cannot directly call it from compose. But there are a few
-ways we can mix both worlds where you can have a modern jetpack compose, but still able to launch the stream container
-along side it. In this sample, we used ComposeView to achieve that.
+Since the SDK uses a fragment to display the stream container, we cannot directly call it from compose. There are a few
+ways we can mix both worlds where you can have Jetpack Compose, but still able to launch the stream container
+along side it. In this sample, ComposeView is used to achieve that. 
+
+Below is a class called `ComposeFrameLayout` which is a regular `FrameLayout`. This `FrameLayout `contains a `ComposeView` that returns
+Compose content..
+
 
 ![test](Screenshot.png)
 
@@ -48,7 +52,10 @@ defStyleAttr: Int = 0
 }
 ```
 
-XML layout which refers to ComposeView
+The XML layout below contains 3 container layouts. A regular `FrameLayout`, a `ComposeView`, and the `ComposeFrameLayout` created above.
+The `FrameLayout` with id `stream_container` is the container on which we want to display the
+stream container.
+
 ```
     <FrameLayout
             android:id="@+id/stream_container"
@@ -79,8 +86,10 @@ XML layout which refers to ComposeView
         />
 ```
 
-The stream container can still use the xml framelayout to load its fragment,and also at the same time
-write compose components.
+The code below shows that the SDK uses the `stream_container` to load its fragment and at the same time
+write Jetpack Compose components by getting a reference from the `composeView` element from the XML. You can use this
+inside an Activity or a Fragment.
+
 ```
 override fun onCreate(savedInstanceState: Bundle?) {
 super.onCreate(savedInstanceState)
