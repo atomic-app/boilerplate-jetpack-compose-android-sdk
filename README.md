@@ -1,8 +1,8 @@
 # Jetpack Compose SDK
-This is a boiler-plate app that can be forked to get you started with the Atomic Jetpack compose SDK for Android.
+This is a boiler plate app that can be forked to get you started with the Atomic Jetpack compose SDK for Android.
 
-Developers can now use our stream container directly inside a *Jetpack Compose project* as easy as a normal Composable component.
-Using our new Jetpack Compose SDK, we have introduced the *`ComposableStreamContainer`*.
+Developers can seamlessly integrate our stream container into Jetpack Compose projects just like any other Composable component. 
+With our latest Jetpack Compose SDK, we've introduced the `ComposableStreamContainer` for effortless implementation
 
 ```
 viewModel?.streamContainer?.let {
