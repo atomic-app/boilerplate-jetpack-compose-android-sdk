@@ -19,10 +19,45 @@ Surface(modifier = Modifier
   }
 )
 
+![test](Screenshot-fullscreen.png)
+```
+The following code snippet demonstrates how to display the stream container together with other Composables.
 ```
 
-![test](Screenshot-fullscreen.png)
+            Surface(modifier = Modifier
+                .fillMaxWidth()) {
+                MaterialTheme {
 
+                    val toast = Toast.makeText(
+                        LocalContext.current,
+                        "You have just interacted with a composable",
+                        Toast.LENGTH_LONG)
+
+                    Column {
+                        Row {
+                            CardDetails(
+                                modifier = Modifier.padding(50.dp),
+                                title = resources.getString(R.string.title),
+                                description = resources.getString(R.string.description),
+                                onClick = { toast.show() },
+                                buttonLabel = resources.getString(R.string.button_label)
+                            )
+                        }
+                        Row() {
+                            // Pass the stream container into the ComposableStreamContainer
+                            viewModel?.streamContainer?.let {
+                                ComposableStreamContainer(
+                                    modifier = Modifier.fillMaxSize(),
+                                    streamContainer = it
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+```
+![test](Screenshot.png)
 
 The code is based around the documentation and designed to get you up and running as quickly as possible, not necessarily as best practice.
 
