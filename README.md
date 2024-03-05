@@ -18,9 +18,9 @@ Surface(modifier = Modifier
    }
   }
 )
-
-![test](Screenshot-fullscreen.png)
 ```
+![test](Screenshot-fullscreen.png)
+
 The following code snippet demonstrates how to display the stream container together with other Composables.
 ```
 
