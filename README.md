@@ -1,124 +1,17 @@
-# boilerplate-jetpack-compose-android-sdk
-This is a boiler-plate app that can be forked to get you started with the Atomic SDK for Android and jetpack compose.
+# Jetpack Compose SDK
+This is a boiler-plate app that can be forked to get you started with the Atomic Jetpack compose SDK for Android.
 
-Since the SDK uses a fragment to display the stream container, we cannot directly call it from compose. There are a few
-ways we can mix both worlds where you can have Jetpack Compose, but still able to launch the stream container
-along side it. In this sample, ComposeView is used to achieve that. 
+Developers can now use our stream container directly inside a *Jetpack Compose project* as easy as a normal Composable component.
+Using our new Jetpack Compose SDK, we have introduced the *`ComposableStreamContainer`*.
 
-Below is a class called `ComposeFrameLayout` which is a regular `FrameLayout`. This `FrameLayout `contains a `ComposeView` that returns
-Compose content..
-
+```
+viewModel?.streamContainer?.let {
+     ComposableStreamContainer(modifier = Modifier.fillMaxSize(), streamContainer = it)
+ }
+```
 
 ![test](Screenshot.png)
 
-```
-class ComposeFrameLayout @JvmOverloads constructor(
-context: Context, attrs: AttributeSet? = null,
-defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
-
-    init {
-        addView(
-            ComposeView(context).apply {
-
-                setViewCompositionStrategy(
-                    ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
-                )
-                setContent {
-                    val toast = Toast.makeText(
-                        LocalContext.current,
-                        "You have just interacted with a composable",
-                        Toast.LENGTH_LONG
-                    )
-
-                    Column {
-                        Row() {
-                            MaterialTheme {
-                                CardDetails(
-                                    title = "Composable inside a FrameLayout",
-                                    description = "This is a sample code where you " +
-                                            "can create a composable which act as a normal view." +
-                                            "You can add this to your XML layout like a regular FrameLayout",
-                                    onClick = { toast.show() },
-                                    buttonLabel = "Click me"
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        )
-    }
-}
-```
-
-The XML layout below contains 3 container layouts. A regular `FrameLayout`, a `ComposeView`, and the `ComposeFrameLayout` created above.
-The `FrameLayout` with id `stream_container` is the container on which we want to display the
-stream container.
-
-```
-    <FrameLayout
-            android:id="@+id/stream_container"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-
-    <io.atomic.sdk.components.ComposeFrameLayout
-        android:id ="@+id/compose_frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stream_container"
-        android:paddingTop="5dp"/>
-
-
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/compose_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/compose_frameLayout"
-        android:paddingTop="5dp"
-        />
-```
-
-The code below shows that the SDK uses the `stream_container` to load its fragment and at the same time
-write Jetpack Compose components by getting a reference from the `composeView` element from the XML. You can use this
-inside an Activity or a Fragment.
-
-```
-override fun onCreate(savedInstanceState: Bundle?) {
-super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.main_layout)
-
-        // Reference the viewModel
-        viewModel = ViewModelProvider(this)[BoilerPlateViewModel::class.java]
-
-        // Start the stream container
-        viewModel.streamContainer?.start(R.id.stream_container, supportFragmentManager)
-
-
-        //Reference the composeView element from xml layout
-        val composeView = findViewById<ComposeView>(R.id.compose_view)
-        //This is where you set your jetpack compose compose contents
-        composeView.apply {
-            //Dispose of the Composition when the view's LifecycleOwner is destroyed
-            setViewCompositionStrategy(
-                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
-            )
-
-            setContent {
-                // Do all your compose stuffs here
-            }
-        }
- }
-
-```
 
 The code is based around the documentation and designed to get you up and running as quickly as possible, not necessarily as best practice.
 
