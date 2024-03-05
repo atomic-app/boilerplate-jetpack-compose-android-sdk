@@ -1,13 +1,24 @@
 # Jetpack Compose SDK
 This is a boiler plate app that can be forked to get you started with the Atomic Jetpack compose SDK for Android.
 
-Developers can seamlessly integrate our stream container into Jetpack Compose projects just like any other Composable component. 
-With our latest Jetpack Compose SDK, we've introduced the `ComposableStreamContainer` for effortless implementation
+Integrating our stream container into Jetpack Compose projects is seamless, treating it as any other Composable component. 
+With our latest Jetpack Compose SDK, the *ComposableStreamContainer* streamlines integration. However, to make it functional, 
+we still need to instantiate a *StreamContainer* within our ViewModel. 
+This instance must then be passed into the *ComposableStreamContainer*, which serves as a wrapper for the *StreamContainer*.
+
+The following code snippet demonstrates how to display the stream container, occupying the entire screen.
 
 ```
-viewModel?.streamContainer?.let {
-     ComposableStreamContainer(modifier = Modifier.fillMaxSize(), streamContainer = it)
- }
+Surface(modifier = Modifier
+                .fillMaxWidth()) {
+   MaterialTheme {
+       viewModel?.streamContainer?.let {
+            ComposableStreamContainer(modifier = Modifier.fillMaxSize(), streamContainer = it)
+       }         
+   }
+  }
+)
+
 ```
 
 ![test](Screenshot.png)
