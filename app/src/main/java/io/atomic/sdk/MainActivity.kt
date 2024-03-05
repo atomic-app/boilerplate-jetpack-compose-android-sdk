@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                         Row() {
-                            // Pass the streamcontainer into the ComposableStreamContainer
+                            // Pass the stream container into the ComposableStreamContainer
                             viewModel?.streamContainer?.let {
                                 ComposableStreamContainer(
                                     modifier = Modifier.fillMaxSize(),
@@ -96,15 +96,13 @@ class MainActivity : AppCompatActivity() {
      * any handlers for link and submit buttons in here too */
     private fun applyHandlers(shallReset: Boolean = false){
 
-            if (shallReset) {
-                viewModel?.streamContainer?.cardDidRequestRunTimeVariablesHandler = null
-            }
+         if (shallReset) {
+            viewModel?.streamContainer?.cardDidRequestRunTimeVariablesHandler = null
+         }
 
-            viewModel?.streamContainer?.cardDidRequestRunTimeVariablesHandler = { cards, done ->
-                cardDidRequestRunTimeVariablesHandler(cards, done)
-            }
-
-
+         viewModel?.streamContainer?.cardDidRequestRunTimeVariablesHandler = { cards, done ->
+             cardDidRequestRunTimeVariablesHandler(cards, done)
+         }
     }
 
     /** here is where we apply runtime variables to a card.
