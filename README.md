@@ -21,7 +21,7 @@ Surface(modifier = Modifier
 
 ```
 
-![test](Screenshot.png)
+![test](Screenshot-fullscreen.png)
 
 
 The code is based around the documentation and designed to get you up and running as quickly as possible, not necessarily as best practice.
