@@ -12,11 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CardDetails (title: String,
+fun CardDetails (
+               modifier: Modifier,
+               title: String,
                description: String,
                onClick: () -> Unit,
                buttonLabel: String) {
-    Card {
+    Card(modifier = modifier) {
 
         Column {
             Row (modifier = Modifier.padding(5.dp)){

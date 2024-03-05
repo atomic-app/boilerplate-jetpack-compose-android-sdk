@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'io.atomic.sdk'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "boilerplate.jetpack.compose.android.sdk"
@@ -52,6 +52,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0'
 
     implementation "io.atomic.actioncards:aacsdk:$atomicSdkVersion"
+    implementation "com.io.atomic:jetpackcomposesdk:24.1.0-beta1"
+
 
     // Firebase support for Notifications
     // import the Firebase BOM
