@@ -1,31 +1,26 @@
 package io.atomic.sdk
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.atomic.actioncards.feed.data.model.AACCardInstance
 import com.io.atomic.jetpackcomposesdk.sdk.ComposableStreamContainer
 import io.atomic.sdk.components.CardDetails
+import io.atomic.sdk.components.ComposableLifecycle
 import java.text.DateFormat
 import java.util.Calendar
 
@@ -70,27 +65,27 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            //Observe Lifecycle events
+            ComposableLifecycle{ _, event->
+                when(event){
+                    Lifecycle.Event.ON_CREATE,
+                    Lifecycle.Event.ON_RESUME ->
+                        applyHandlers()
+
+                    Lifecycle.Event.ON_PAUSE ->
+                        applyHandlers(true)
+
+                    Lifecycle.Event.ON_DESTROY ->
+                        viewModel?.streamContainer?.destroy(supportFragmentManager)
+
+                    else ->
+                        Log.d("TAG", "Out of life cycle")
+
+                }
+            }
       }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        // Since were still using fragmentManager under the hood,
-        // we need to clean this up as well during destroy
-        viewModel?.streamContainer?.destroy(supportFragmentManager)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        applyHandlers()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        applyHandlers(true)
-    }
-
 
     /** This is currently only setting runtime variables handler, but you could also setup
      * any handlers for link and submit buttons in here too */
@@ -110,14 +105,19 @@ class MainActivity : AppCompatActivity() {
     private fun cardDidRequestRunTimeVariablesHandler(cards: List<AACCardInstance>, done: (cardsWithResolvedVariables: List<AACCardInstance>) -> Unit) {
 
         for (card in cards) {
-            val shortDf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT)
-            val today = Calendar.getInstance().time
-            val formattedShortDate = shortDf.format(today)
+
             val customerName = "Atomic guy!!!"
 
+            val longDf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT)
+            val shortDf: DateFormat = DateFormat.getDateInstance(DateFormat.LONG)
+            val today = Calendar.getInstance().time
+            val formattedLongDate = longDf.format(today)
+            val formattedShortDate = shortDf.format(today)
+
             // Resolve the below runtime variables
+            card.resolveVariableWithNameAndValue("dateShort", formattedShortDate)
+            card.resolveVariableWithNameAndValue("dateLong", formattedLongDate)
             card.resolveVariableWithNameAndValue("customer_name", customerName)
-            card.resolveVariableWithNameAndValue("birthdate", formattedShortDate)
         }
 
         done(cards)
