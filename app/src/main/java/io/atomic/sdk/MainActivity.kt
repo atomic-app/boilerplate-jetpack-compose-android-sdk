@@ -16,24 +16,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+
 import com.atomic.actioncards.feed.data.model.AACCardInstance
 import com.io.atomic.jetpackcomposesdk.sdk.ComposableStreamContainer
 import io.atomic.sdk.components.CardDetails
 import io.atomic.sdk.components.ComposableLifecycle
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
-
-    private var viewModel: BoilerPlateViewModel? = null
-
+   
+   private val  viewModel: BoilerPlateViewModel by viewModel()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            viewModel = viewModel<BoilerPlateViewModel>()
-
+            
             Surface(modifier = Modifier
                 .fillMaxWidth()) {
                 MaterialTheme {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         Row() {
                             // Pass the stream container into the ComposableStreamContainer
-                            viewModel?.streamContainer?.let {
+                            viewModel.streamContainer?.let {
                                 ComposableStreamContainer(
                                     modifier = Modifier.fillMaxSize(),
                                     streamContainer = it
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                         applyHandlers(true)
 
                     Lifecycle.Event.ON_DESTROY ->
-                        viewModel?.streamContainer?.destroy(supportFragmentManager)
+                        viewModel.streamContainer?.destroy(supportFragmentManager)
 
                     else ->
                         Log.d("TAG", "Out of life cycle")
@@ -87,15 +87,27 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        applyHandlers()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        applyHandlers(true)
+    }
+
+
     /** This is currently only setting runtime variables handler, but you could also setup
      * any handlers for link and submit buttons in here too */
     private fun applyHandlers(shallReset: Boolean = false){
 
          if (shallReset) {
-            viewModel?.streamContainer?.cardDidRequestRunTimeVariablesHandler = null
+            viewModel.streamContainer?.cardDidRequestRunTimeVariablesHandler = null
          }
 
-         viewModel?.streamContainer?.cardDidRequestRunTimeVariablesHandler = { cards, done ->
+         viewModel.streamContainer?.cardDidRequestRunTimeVariablesHandler = { cards, done ->
              cardDidRequestRunTimeVariablesHandler(cards, done)
          }
     }
