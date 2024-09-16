@@ -26,112 +26,104 @@ import java.text.DateFormat
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
-   
-   private val  viewModel: BoilerPlateViewModel by viewModel()
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        setContent {
-            
-            Surface(modifier = Modifier
-                .fillMaxWidth()) {
-                MaterialTheme {
+  private val  viewModel: BoilerPlateViewModel by viewModel()
 
-                    val toast = Toast.makeText(
-                        LocalContext.current,
-                        "You have just interacted with a composable",
-                        Toast.LENGTH_LONG)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-                    Column {
-                        Row {
-                            CardDetails(
-                                modifier = Modifier.padding(50.dp),
-                                title = resources.getString(R.string.title),
-                                description = resources.getString(R.string.description),
-                                onClick = { toast.show() },
-                                buttonLabel = resources.getString(R.string.button_label)
-                            )
-                        }
-                        Row() {
-                            // Pass the stream container into the ComposableStreamContainer
-                            viewModel.streamContainer?.let {
-                                ComposableStreamContainer(
-                                    modifier = Modifier.fillMaxSize(),
-                                    streamContainer = it
-                                )
-                            }
-                        }
-                    }
-                }
+    setContent {
+
+      Surface(modifier = Modifier
+        .fillMaxWidth()) {
+        MaterialTheme {
+
+          Column {
+
+            Row() {
+              // Pass the stream container into the ComposableStreamContainer
+              viewModel.streamContainer?.let {
+                ComposableStreamContainer(
+                  modifier = Modifier.fillMaxSize(),
+                  streamContainer = it
+                )
+              }
             }
+          }
+        }
+      }
 
-            //Observe Lifecycle events
-            ComposableLifecycle{ _, event->
-                when(event){
-                    Lifecycle.Event.ON_CREATE,
-                    Lifecycle.Event.ON_RESUME ->
-                        applyHandlers()
+      //Observe Lifecycle events
+      ComposableLifecycle{ _, event->
+        when(event){
+          Lifecycle.Event.ON_CREATE,
+          Lifecycle.Event.ON_RESUME ->
+            applyHandlers()
 
-                    Lifecycle.Event.ON_PAUSE ->
-                        applyHandlers(true)
+          Lifecycle.Event.ON_PAUSE ->
+            applyHandlers(true)
 
-                    Lifecycle.Event.ON_DESTROY ->
-                        viewModel.streamContainer?.destroy(supportFragmentManager)
+          Lifecycle.Event.ON_DESTROY ->
+            viewModel.streamContainer?.destroy(supportFragmentManager)
 
-                    else ->
-                        Log.d("TAG", "Out of life cycle")
 
-                }
-            }
+          else ->
+            Log.d("TAG", "Out of life cycle")
+
+        }
       }
     }
+  }
 
 
-    override fun onResume() {
-        super.onResume()
-        applyHandlers()
+  override fun onResume() {
+    super.onResume()
+    applyHandlers()
+  }
+
+  override fun onPause() {
+    super.onPause()
+    applyHandlers(true)
+  }
+
+
+  override fun onDestroy() {
+    super.onDestroy()
+    viewModel.streamContainer?.destroy(supportFragmentManager)
+  }
+  /** This is currently only setting runtime variables handler, but you could also setup
+   * any handlers for link and submit buttons in here too */
+  private fun applyHandlers(shallReset: Boolean = false){
+
+    if (shallReset) {
+      viewModel.streamContainer?.cardDidRequestRunTimeVariablesHandler = null
     }
 
-    override fun onPause() {
-        super.onPause()
-        applyHandlers(true)
+    viewModel.streamContainer?.cardDidRequestRunTimeVariablesHandler = { cards, done ->
+      cardDidRequestRunTimeVariablesHandler(cards, done)
+    }
+  }
+
+  /** here is where we apply runtime variables to a card.
+   * Action any you have in your cards here. */
+  private fun cardDidRequestRunTimeVariablesHandler(cards: List<AACCardInstance>, done: (cardsWithResolvedVariables: List<AACCardInstance>) -> Unit) {
+
+    for (card in cards) {
+
+      val customerName = "Atomic guy!!!"
+
+      val longDf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT)
+      val shortDf: DateFormat = DateFormat.getDateInstance(DateFormat.LONG)
+      val today = Calendar.getInstance().time
+      val formattedLongDate = longDf.format(today)
+      val formattedShortDate = shortDf.format(today)
+
+      // Resolve the below runtime variables
+      card.resolveVariableWithNameAndValue("dateShort", formattedShortDate)
+      card.resolveVariableWithNameAndValue("dateLong", formattedLongDate)
+      card.resolveVariableWithNameAndValue("customer_name", customerName)
     }
 
-
-    /** This is currently only setting runtime variables handler, but you could also setup
-     * any handlers for link and submit buttons in here too */
-    private fun applyHandlers(shallReset: Boolean = false){
-
-         if (shallReset) {
-            viewModel.streamContainer?.cardDidRequestRunTimeVariablesHandler = null
-         }
-
-         viewModel.streamContainer?.cardDidRequestRunTimeVariablesHandler = { cards, done ->
-             cardDidRequestRunTimeVariablesHandler(cards, done)
-         }
-    }
-
-    /** here is where we apply runtime variables to a card.
-     * Action any you have in your cards here. */
-    private fun cardDidRequestRunTimeVariablesHandler(cards: List<AACCardInstance>, done: (cardsWithResolvedVariables: List<AACCardInstance>) -> Unit) {
-
-        for (card in cards) {
-
-            val customerName = "Atomic guy!!!"
-
-            val longDf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT)
-            val shortDf: DateFormat = DateFormat.getDateInstance(DateFormat.LONG)
-            val today = Calendar.getInstance().time
-            val formattedLongDate = longDf.format(today)
-            val formattedShortDate = shortDf.format(today)
-
-            // Resolve the below runtime variables
-            card.resolveVariableWithNameAndValue("dateShort", formattedShortDate)
-            card.resolveVariableWithNameAndValue("dateLong", formattedLongDate)
-            card.resolveVariableWithNameAndValue("customer_name", customerName)
-        }
-
-        done(cards)
-    }
+    done(cards)
+  }
 }
